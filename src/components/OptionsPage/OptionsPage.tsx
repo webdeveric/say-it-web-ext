@@ -21,23 +21,35 @@ export const OptionsPage = (): JSX.Element => {
   } = useBrowserStorage<string>(BrowserStorageKey.VoiceName);
   const { voices, loading: voicesLoading } = useVoices();
   const voicesInYourLang = voices.filter(voice => voice.lang.startsWith(languageCode));
-  const voicesNotInYourLang = voices.filter(voice => ! voice.lang.startsWith(languageCode));
+  const voicesNotInYourLang = voices.filter(voice => !voice.lang.startsWith(languageCode));
 
-  const onVoiceNameChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setVoiceName(e.target.value);
-  }, [setVoiceName]);
+  const onVoiceNameChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      setVoiceName(e.target.value);
+    },
+    [setVoiceName],
+  );
 
-  const onPitchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPitch(parseFloat(e.target.value));
-  }, [setPitch]);
+  const onPitchChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setPitch(parseFloat(e.target.value));
+    },
+    [setPitch],
+  );
 
-  const onRateChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setRate(parseFloat(e.target.value));
-  }, [setRate]);
+  const onRateChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setRate(parseFloat(e.target.value));
+    },
+    [setRate],
+  );
 
-  const onVolumeChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setVolume(parseFloat(e.target.value));
-  }, [setVolume]);
+  const onVolumeChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setVolume(parseFloat(e.target.value));
+    },
+    [setVolume],
+  );
 
   return (
     <Bootstrap>
