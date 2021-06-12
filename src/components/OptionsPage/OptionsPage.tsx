@@ -11,9 +11,17 @@ import * as styles from './OptionsPage.css';
 const [languageCode] = navigator.language.split('-');
 
 export const OptionsPage = (): JSX.Element => {
-  const { value: pitch, loading: pitchLoading, set: setPitch } = useBrowserStorage<number>(BrowserStorageKey.Pitch);
-  const { value: rate, loading: rateLoading, set: setRate } = useBrowserStorage<number>(BrowserStorageKey.Rate);
-  const { value: volume, loading: volumeLoading, set: setVolume } = useBrowserStorage<number>(BrowserStorageKey.Volume);
+  const {
+    value: pitch,
+    loading: pitchLoading,
+    set: setPitch,
+  } = useBrowserStorage<number>(BrowserStorageKey.Pitch, 1.0);
+  const { value: rate, loading: rateLoading, set: setRate } = useBrowserStorage<number>(BrowserStorageKey.Rate, 1.0);
+  const {
+    value: volume,
+    loading: volumeLoading,
+    set: setVolume,
+  } = useBrowserStorage<number>(BrowserStorageKey.Volume, 1.0);
   const {
     value: voiceName,
     loading: voiceNameLoading,
@@ -55,7 +63,9 @@ export const OptionsPage = (): JSX.Element => {
     <Bootstrap>
       <div className={cn(styles.inputRow, styles.selectRow)}>
         <label className={styles.label}>Voice</label>
-        {!voiceNameLoading && !voicesLoading && (
+        {(voicesLoading || voiceNameLoading) && <p>Loading voices</p>}
+        {!voicesLoading && !voices.length && <p>Voices unavailable</p>}
+        {!voiceNameLoading && !voicesLoading && voices.length > 0 && (
           <select onChange={onVoiceNameChange} defaultValue={voiceName} className={cn(styles.input, styles.selectBox)}>
             <option value=""></option>
             <optgroup label="Voices in your language">

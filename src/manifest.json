@@ -29,13 +29,13 @@
   "commands": {
     "stop-speaking": {
       "suggested_key": {
-        "default": "Ctrl+Alt+W"
+        "default": "Alt+Ctrl+W"
       },
       "description": "Stop speaking"
     },
     "repeat-last-phrase": {
       "suggested_key": {
-        "default": "Ctrl+Alt+S"
+        "default": "Alt+Ctrl+S"
       },
       "description": "Say it again"
     }
