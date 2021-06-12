@@ -48,14 +48,14 @@ export const OptionsPage = (): JSX.Element => {
             <option value=""></option>
             <optgroup label="Voices in your language">
               {voicesInYourLang.map(voice => (
-                <option key={voice.voiceURI} value={voice.name}>
+                <option key={voice.voiceURI} value={voice.name} title={voice.lang}>
                   {voice.name}
                 </option>
               ))}
             </optgroup>
             <optgroup label="Other voices">
               {voicesNotInYourLang.map(voice => (
-                <option key={voice.voiceURI} value={voice.name}>
+                <option key={voice.voiceURI} value={voice.name} title={voice.lang}>
                   {voice.name}
                 </option>
               ))}
@@ -91,7 +91,7 @@ export const OptionsPage = (): JSX.Element => {
             onChange={onRateChange}
             value={rate}
             min={0.1}
-            max={10}
+            max={3}
             step={0.01}
             ticks
           />
