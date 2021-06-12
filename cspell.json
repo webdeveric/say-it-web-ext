@@ -1,0 +1,22 @@
+{
+  "version": "0.1",
+  "language": "en",
+  "words": [
+    "browserslist",
+    "corejs",
+    "entrypoints",
+    "pathinfo",
+    "postbuild",
+    "postweb",
+    "prebuild",
+    "presign",
+    "typecheck",
+    "Unmount",
+    "unsanitized",
+    "webdeveric",
+    "webextension",
+    "webextensions",
+    "xargs"
+  ],
+  "ignorePaths": ["package-lock.json", "node_modules/**", "dist/**", "build/**"]
+}

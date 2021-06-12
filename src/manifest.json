@@ -1,0 +1,43 @@
+{
+  "manifest_version": 2,
+  "name": "Say It",
+  "short_name": "Say It",
+  "description": "Highlight a word then say it",
+  "version": "0.0.0",
+  "author": "Eric King",
+  "homepage_url": "https://github.com/webdeveric/say-it-web-ext",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@say-it"
+    }
+  },
+  "icons": {
+    "48": "icons/speaker.svg",
+    "96": "icons/speaker.svg"
+  },
+  "permissions": ["contextMenus", "storage"],
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "options_ui": {
+    "browser_style": true,
+    "chrome_style": true,
+    "open_in_tab": false,
+    "page": "options.html"
+  },
+  "commands": {
+    "stop-speaking": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+W"
+      },
+      "description": "Stop speaking"
+    },
+    "repeat-last-phrase": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+S"
+      },
+      "description": "Say it again"
+    }
+  }
+}

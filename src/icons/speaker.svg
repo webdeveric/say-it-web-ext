@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <mask id="icon">
+    <circle cx="256" cy="256" r="241" stroke-width="30" paint-order="stroke" stroke="#666" fill="#000"/>
+    <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#000" font-size="300">🔊</text>
+  </mask>
+  <circle cx="256" cy="256" r="256" fill="orangered" mask="url(#icon)"/>
+</svg>

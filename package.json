@@ -1,0 +1,100 @@
+{
+  "name": "@webdeveric/say-it-web-ext",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Say it",
+  "keywords": [
+    "WebExtension",
+    "web-extension"
+  ],
+  "author": {
+    "email": "eric@webdeveric.com",
+    "name": "Eric King",
+    "url": "http://webdeveric.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdeveric/say-it-web-ext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webdeveric/say-it-web-ext/issues"
+  },
+  "homepage": "https://github.com/webdeveric/say-it-web-ext",
+  "scripts": {
+    "lint": "eslint ./*.js ./src --ext .ts --ext .ts,.tsx,.js,.jsx --fix",
+    "spellcheck": "cspell --no-progress \"./{.github,src}/**/*.{ts,tsx,js,jsx,json}\" \"./*.{md,js}\" \"./package.json\"",
+    "format": "prettier --write .",
+    "web-ext": "web-ext build",
+    "postweb-ext": "web-ext lint",
+    "prebuild": "npm run spellcheck",
+    "build": "NODE_ENV=production webpack",
+    "start": "NODE_ENV=development webpack --watch",
+    "presign": "npm run build",
+    "sign": "web-ext sign",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "version": "sync-package-version ./src/manifest.json | xargs git add",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix",
+      "jest --bail --findRelatedTests"
+    ],
+    "*.{js,jsx,ts,tsx,json,md,css}": [
+      "cspell lint --no-progress --no-summary --no-must-find-files",
+      "prettier --write"
+    ]
+  },
+  "prettier": "@webdeveric/prettier-config",
+  "browserslist": [
+    "extends @webdeveric/browserslist-config/web-extensions"
+  ],
+  "devDependencies": {
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/jest": "^26.0.23",
+    "@types/react": "^17.0.7",
+    "@types/react-dom": "^17.0.5",
+    "@webdeveric/browserslist-config": "^0.2.0",
+    "@webdeveric/eslint-config-ts": "^0.1.2",
+    "@webdeveric/prettier-config": "^0.1.0",
+    "@webdeveric/sync-package-version": "^0.3.0",
+    "@webdeveric/utils": "^0.7.1",
+    "autoprefixer": "^10.2.5",
+    "classnames": "^2.3.1",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.0",
+    "core-js": "^3.8.3",
+    "cspell": "^5.4.1",
+    "css-loader": "^5.2.5",
+    "css-minimizer-webpack-plugin": "^3.0.0",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-no-unsanitized": "^3.1.4",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-webpack-plugin": "^2.5.4",
+    "git-rev-sync": "^3.0.1",
+    "html-webpack-plugin": "^5.3.1",
+    "husky": "^6.0.0",
+    "jest": "^27.0.1",
+    "lint-staged": "^11.0.0",
+    "mini-css-extract-plugin": "^1.6.0",
+    "postcss": "^8.3.0",
+    "postcss-loader": "^5.3.0",
+    "postcss-nested": "^5.0.5",
+    "prettier": "^2.3.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "ts-loader": "^9.2.1",
+    "typescript": "^4.3.2",
+    "web-ext": "^6.1.0",
+    "web-ext-plugin": "^1.2.0",
+    "webextension-polyfill-ts": "^0.25.0",
+    "webpack": "^5.38.0",
+    "webpack-assets-manifest": "^5.0.6",
+    "webpack-cli": "^4.7.0"
+  }
+}
