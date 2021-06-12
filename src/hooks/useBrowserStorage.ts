@@ -13,9 +13,10 @@ export type StorageHook<T> = {
 
 export const useBrowserStorage = <T = unknown>(
   key: BrowserStorageKey,
+  initialValue?: T,
   storageArea: StorageArea = StorageArea.Local,
 ): StorageHook<T> => {
-  const [value, setValue] = useState<T>();
+  const [value, setValue] = useState<T | undefined>(initialValue);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(true);
 
@@ -29,12 +30,14 @@ export const useBrowserStorage = <T = unknown>(
     browser.storage[storageArea]
       .get(key)
       .then(
-        ({ [key]: data }) => {
+        results => {
           console.groupCollapsed(`[useStorage hook] Getting ${key} from browser.storage.${storageArea}`);
-          console.info(data);
+          console.info(results);
           console.groupEnd();
 
-          setValue(data);
+          if (Object.prototype.hasOwnProperty.call(results, key)) {
+            setValue(results[key]);
+          }
         },
         error => {
           console.groupCollapsed(`[useStorage hook] Error getting ${key} from browser.storage.${storageArea}`);
