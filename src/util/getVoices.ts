@@ -1,23 +1,29 @@
 import { until } from '@webdeveric/utils';
 
 export async function getVoices(): Promise<SpeechSynthesisVoice[]> {
-  // Sometimes speechSynthesis.getVoices() will return an empty array.
-  // Lets try to getVoices() a few times before giving up.
-  const data = await until<SpeechSynthesisVoice[]>(
-    resolve => {
-      const voices = window.speechSynthesis.getVoices();
+  let data: SpeechSynthesisVoice[] = [];
 
-      if (voices.length) {
-        resolve(voices);
-      }
-    },
-    {
-      delay: context => 100 * context.callCount,
-      callLimit: 10,
-    },
-  );
+  try {
+    // Sometimes speechSynthesis.getVoices() will return an empty array.
+    // Lets try to getVoices() a few times before giving up.
+    data = await until<SpeechSynthesisVoice[]>(
+      resolve => {
+        const voices = window.speechSynthesis.getVoices();
 
-  data.sort((a, b) => a.name.localeCompare(b.name));
+        if (voices.length) {
+          resolve(voices);
+        }
+      },
+      {
+        delay: context => 100 * context.callCount,
+        callLimit: 5,
+      },
+    );
+
+    data.sort((a, b) => a.name.localeCompare(b.name));
+  } catch (error) {
+    console.info(error);
+  }
 
   return data;
 }
