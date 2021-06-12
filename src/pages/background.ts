@@ -65,7 +65,7 @@ async function handleOnCommand(command: string): Promise<void> {
 browser.contextMenus.create(
   {
     id: 'say-selection',
-    title: 'Say it',
+    title: '&Say “%s”',
     contexts: ['selection'],
   },
   maybeLogError,
