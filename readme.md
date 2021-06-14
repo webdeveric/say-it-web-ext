@@ -1,5 +1,13 @@
 # Say it
 
+Say a word or phrase just by highlighting it and clicking the Say It context menu item.
+
+The voice, pitch, rate, and volume can be customized in the add-on preferences.
+
+## Install
+
+You can get this addon at https://addons.mozilla.org/en-US/firefox/addon/say-it/
+
 ## Local development
 
 1. `npm ci`
@@ -8,7 +16,7 @@
 ### Building the web extension
 
 ```shell
-npm run build
+npm run web-ext
 ```
 
 The `zip` output will be in the `./build` folder.
