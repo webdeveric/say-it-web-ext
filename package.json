@@ -25,6 +25,7 @@
     "lint": "eslint ./*.js ./src --ext .ts --ext .ts,.tsx,.js,.jsx --fix",
     "spellcheck": "cspell --no-progress \"./{.github,src}/**/*.{ts,tsx,js,jsx,json}\" \"./*.{md,js}\" \"./package.json\"",
     "format": "prettier --write .",
+    "preweb-ext": "npm run build",
     "web-ext": "web-ext build",
     "postweb-ext": "web-ext lint",
     "prebuild": "npm run spellcheck",
