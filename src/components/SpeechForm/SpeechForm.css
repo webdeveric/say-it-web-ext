@@ -1,0 +1,13 @@
+.speechForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.textInput {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.button {
+  margin-top: 0.25rem;
+}

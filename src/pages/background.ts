@@ -1,7 +1,7 @@
 import { browser, Menus } from 'webextension-polyfill-ts';
-import { BrowserStorageKey, SessionStorageKey } from '../models';
-import speak, { SpeakOptions } from '../util/speak';
-import { getVoices } from '../util/getVoices';
+import { getSpeakOptions } from '../util/getSpeakOptions';
+import { SessionStorageKey } from '../models';
+import { speak } from '../util/speak';
 
 import '../icons/speaker.svg';
 
@@ -9,27 +9,6 @@ function maybeLogError(): void {
   if (browser.runtime.lastError) {
     console.log(browser.runtime.lastError);
   }
-}
-
-async function getSpeakOptions(): Promise<SpeakOptions> {
-  const options = await browser.storage.local.get([
-    BrowserStorageKey.Pitch,
-    BrowserStorageKey.Rate,
-    BrowserStorageKey.Volume,
-    BrowserStorageKey.VoiceName,
-  ]);
-
-  const voices = await getVoices();
-
-  const voice = voices.find(v => v.name === options[BrowserStorageKey.VoiceName]);
-
-  if (voice) {
-    options.voice = voice;
-  }
-
-  delete options[BrowserStorageKey.VoiceName];
-
-  return options;
 }
 
 async function onContextMenuClick(info: Menus.OnClickData): Promise<void> {

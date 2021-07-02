@@ -20,6 +20,7 @@ const config = {
   devtool: isProd ? 'source-map' : 'inline-source-map',
   entry: {
     background: './src/pages/background',
+    browserAction: './src/pages/browserAction',
     options: './src/pages/options',
   },
   output: {
@@ -94,6 +95,18 @@ const config = {
         viewport: false,
       },
       title: `${extensionName} - Background`,
+    }),
+    new HtmlWebpackPlugin({
+      minify: false,
+      showErrors: true,
+      chunks: ['browserAction'],
+      filename: 'browserAction.html',
+      inject: 'head',
+      meta: {
+        viewport: false,
+      },
+      title: `${extensionName} - Browser Action`,
+      template: path.join(__dirname, 'src', 'react-app-template.html'),
     }),
     new HtmlWebpackPlugin({
       minify: false,
