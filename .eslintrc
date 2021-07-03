@@ -5,8 +5,12 @@
     "eslint-config-prettier",
     "plugin:no-unsanitized/DOM",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
+  "rules": {
+    "jsx-a11y/no-onchange": "off"
+  },
   "settings": {
     "react": {
       "version": "detect"
@@ -19,7 +23,9 @@
   },
   "overrides": [
     {
-      "files": ["**/*.tsx"],
+      "files": [
+        "**/*.tsx"
+      ],
       "rules": {
         "react/prop-types": "off"
       }

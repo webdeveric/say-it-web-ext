@@ -35,6 +35,11 @@
     "page": "options.html"
   },
   "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Ctrl+A"
+      }
+    },
     "stop-speaking": {
       "suggested_key": {
         "default": "Alt+Ctrl+W"

@@ -62,11 +62,18 @@ export const OptionsPage = (): JSX.Element => {
   return (
     <Bootstrap>
       <div className={cn(styles.inputRow, styles.selectRow)}>
-        <label className={styles.label}>Voice</label>
+        <label className={styles.label} htmlFor="voice">
+          Voice
+        </label>
         {(voicesLoading || voiceNameLoading) && <p>Loading voices</p>}
         {!voicesLoading && !voices.length && <p>Voices unavailable</p>}
         {!voiceNameLoading && !voicesLoading && voices.length > 0 && (
-          <select onChange={onVoiceNameChange} defaultValue={voiceName} className={cn(styles.input, styles.selectBox)}>
+          <select
+            id="voice"
+            onChange={onVoiceNameChange}
+            defaultValue={voiceName}
+            className={cn(styles.input, styles.selectBox)}
+          >
             <option value=""></option>
             <optgroup label="Voices in your language">
               {voicesInYourLang.map(voice => (
@@ -87,7 +94,9 @@ export const OptionsPage = (): JSX.Element => {
       </div>
 
       <div className={styles.inputRow}>
-        <label className={styles.label}>Pitch</label>
+        <label className={styles.label} htmlFor="pitch-slider">
+          Pitch
+        </label>
         <output className={styles.output}>{pitch}</output>
         {!pitchLoading && (
           <RangeSlider
@@ -104,7 +113,9 @@ export const OptionsPage = (): JSX.Element => {
       </div>
 
       <div className={styles.inputRow}>
-        <label className={styles.label}>Rate</label>
+        <label className={styles.label} htmlFor="rate-slider">
+          Rate
+        </label>
         <output className={styles.output}>{rate}</output>
         {!rateLoading && (
           <RangeSlider
@@ -121,7 +132,9 @@ export const OptionsPage = (): JSX.Element => {
       </div>
 
       <div className={styles.inputRow}>
-        <label className={styles.label}>Volume</label>
+        <label className={styles.label} htmlFor="volume-slider">
+          Volume
+        </label>
         <output className={styles.output}>{volume}</output>
         {!volumeLoading && (
           <RangeSlider

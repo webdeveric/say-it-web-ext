@@ -29,8 +29,23 @@ const config = {
     assetModuleFilename: 'assets/[hash][ext][query]',
   },
   optimization: {
-    minimize: false,
+    minimize: isProd,
     minimizer: ['...', new CssMinimizerPlugin()],
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
   module: {
     rules: [

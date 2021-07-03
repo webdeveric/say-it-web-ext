@@ -4,6 +4,7 @@
   "words": [
     "browserslist",
     "corejs",
+    "entrypoint",
     "entrypoints",
     "pathinfo",
     "postbuild",

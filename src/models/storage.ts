@@ -3,6 +3,7 @@ export enum BrowserStorageKey {
   Rate = 'rate',
   Volume = 'volume',
   VoiceName = 'voiceName',
+  LastPhrase = 'last-phrase',
 }
 
 export enum SessionStorageKey {
