@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { browser } from 'webextension-polyfill-ts';
 
 import { BrowserStorageKey } from '../../models';
@@ -70,7 +70,7 @@ export const SpeechForm = (): JSX.Element => {
         onKeyUp={onKeyUp}
         className={styles.textInput}
       ></textarea>
-      <button type="submit" className={styles.button} disabled={text.length === 0}>
+      <button type="submit" className={styles.button} disabled={!text}>
         Say It <small>(Ctrl+Enter or Cmd+Enter)</small>
       </button>
     </form>

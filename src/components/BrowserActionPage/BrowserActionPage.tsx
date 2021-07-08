@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Bootstrap } from '../Bootstrap';
 import { SpeechDetailsProvider } from '../../contexts/SpeechContext';
 import { SpeechForm } from '../SpeechForm/SpeechForm';

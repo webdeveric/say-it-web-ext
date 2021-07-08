@@ -51,7 +51,14 @@ const config = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              configFile: isProd ? 'tsconfig.json' : 'tsconfig-dev.json',
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
@@ -182,6 +189,7 @@ const config = {
       },
     }),
     new WebExtPlugin({
+      buildPackage: true,
       artifactsDir: webExtConfig.artifactsDir,
       sourceDir: webExtConfig.sourceDir,
       startUrl: webExtConfig.run.startUrl,

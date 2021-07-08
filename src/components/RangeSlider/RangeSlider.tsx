@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, VoidFunctionComponent } from 'react';
+import { Fragment, InputHTMLAttributes, VoidFunctionComponent } from 'react';
 import cn from 'classnames';
 
 import { TickMarks, TickMarksProps } from './TickMarks';
@@ -26,7 +26,7 @@ export const RangeSlider: VoidFunctionComponent<RangeSliderProps> = ({
   const v = parseFloat(String(value));
 
   return (
-    <React.Fragment>
+    <Fragment>
       <input
         type="range"
         list={`${id}-ticks`}
@@ -40,6 +40,6 @@ export const RangeSlider: VoidFunctionComponent<RangeSliderProps> = ({
         {...rest}
       />
       {ticks && <TickMarks id={`${id}-ticks`} min={min} max={max} step={step} limit={Math.min(maxTicks, max / step)} />}
-    </React.Fragment>
+    </Fragment>
   );
 };

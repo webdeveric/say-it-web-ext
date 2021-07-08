@@ -1,4 +1,4 @@
-import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
+import { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
 
 import { BrowserStorageKey } from '../models';
 import { getVoices } from '../util/getVoices';

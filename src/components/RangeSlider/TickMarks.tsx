@@ -1,4 +1,4 @@
-import React, { VoidFunctionComponent } from 'react';
+import { VoidFunctionComponent } from 'react';
 
 export type TickMarksProps = {
   id: string;

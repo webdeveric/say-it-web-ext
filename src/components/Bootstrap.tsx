@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent, StrictMode } from 'react';
 
 import { ErrorBoundary } from './ErrorBoundary';
 
 export const Bootstrap: FunctionComponent = ({ children }) => {
   return (
-    <React.StrictMode>
+    <StrictMode>
       <ErrorBoundary>{children}</ErrorBoundary>
-    </React.StrictMode>
+    </StrictMode>
   );
 };
