@@ -6,6 +6,8 @@
     "corejs",
     "entrypoint",
     "entrypoints",
+    "jsxdev",
+    "orangered",
     "pathinfo",
     "postbuild",
     "postweb",
@@ -20,5 +22,5 @@
     "webextensions",
     "xargs"
   ],
-  "ignorePaths": ["package-lock.json", "node_modules/**", "dist/**", "build/**"]
+  "ignorePaths": ["package-lock.json", "node_modules", "coverage", "dist", "build", "private"]
 }
