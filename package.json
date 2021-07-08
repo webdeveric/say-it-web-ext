@@ -23,7 +23,7 @@
   "homepage": "https://github.com/webdeveric/say-it-web-ext",
   "scripts": {
     "lint": "eslint ./*.js ./src --ext .ts --ext .ts,.tsx,.js,.jsx --fix",
-    "spellcheck": "cspell './**/*'",
+    "spellcheck": "cspell --no-progress './**/*'",
     "format": "prettier --write .",
     "prebuild": "npm run spellcheck",
     "build": "NODE_ENV=production webpack",
