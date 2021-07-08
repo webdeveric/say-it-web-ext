@@ -1,9 +1,9 @@
-import React, { Component, Fragment, VoidFunctionComponent } from 'react';
+import { Component, Fragment, ReactNode, VoidFunctionComponent } from 'react';
 
 import * as styles from './ErrorBoundary.css';
 
 type ErrorBoundaryProps = {
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
 
 type ErrorBoundaryState = {
@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     console.groupEnd();
   }
 
-  render(): React.ReactNode {
+  render(): ReactNode {
     if (this.state.error) {
       return (
         <div className={styles.errorBoundary}>

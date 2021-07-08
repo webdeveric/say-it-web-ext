@@ -20,6 +20,14 @@
     "page": "background.html",
     "persistent": false
   },
+  "browser_action": {
+    "default_title": "Say It",
+    "default_popup": "browserAction.html",
+    "default_icon": {
+      "19": "icons/speaker.svg",
+      "38": "icons/speaker.svg"
+    }
+  },
   "options_ui": {
     "browser_style": true,
     "chrome_style": true,
@@ -27,6 +35,11 @@
     "page": "options.html"
   },
   "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Ctrl+A"
+      }
+    },
     "stop-speaking": {
       "suggested_key": {
         "default": "Alt+Ctrl+W"

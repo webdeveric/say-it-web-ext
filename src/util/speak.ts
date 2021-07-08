@@ -6,7 +6,7 @@ export type SpeakOptions = {
   voice?: SpeechSynthesisVoice | null;
 };
 
-export default async function speak(
+export async function speak(
   text: string,
   options: SpeakOptions = {
     rate: 1,

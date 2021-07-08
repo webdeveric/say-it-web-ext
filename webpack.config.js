@@ -20,6 +20,7 @@ const config = {
   devtool: isProd ? 'source-map' : 'inline-source-map',
   entry: {
     background: './src/pages/background',
+    browserAction: './src/pages/browserAction',
     options: './src/pages/options',
   },
   output: {
@@ -28,14 +29,36 @@ const config = {
     assetModuleFilename: 'assets/[hash][ext][query]',
   },
   optimization: {
-    minimize: false,
+    minimize: isProd,
     minimizer: ['...', new CssMinimizerPlugin()],
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              configFile: isProd ? 'tsconfig.json' : 'tsconfig-dev.json',
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
@@ -98,6 +121,18 @@ const config = {
     new HtmlWebpackPlugin({
       minify: false,
       showErrors: true,
+      chunks: ['browserAction'],
+      filename: 'browserAction.html',
+      inject: 'head',
+      meta: {
+        viewport: false,
+      },
+      title: `${extensionName} - Browser Action`,
+      template: path.join(__dirname, 'src', 'react-app-template.html'),
+    }),
+    new HtmlWebpackPlugin({
+      minify: false,
+      showErrors: true,
       chunks: ['options'],
       filename: 'options.html',
       meta: {
@@ -154,6 +189,7 @@ const config = {
       },
     }),
     new WebExtPlugin({
+      buildPackage: true,
       artifactsDir: webExtConfig.artifactsDir,
       sourceDir: webExtConfig.sourceDir,
       startUrl: webExtConfig.run.startUrl,

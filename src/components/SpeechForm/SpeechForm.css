@@ -1,0 +1,41 @@
+.speechForm {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25rem;
+}
+
+.label {
+  font: caption;
+  margin: 0 0 0.5rem 0;
+  font-size: 1em;
+}
+
+.textInput {
+  resize: vertical;
+  min-height: 6rem;
+  font-size: 1em;
+}
+
+.button {
+  margin-top: 0.25rem;
+  border: 0;
+  padding: 0.333em 0.666em;
+  background: rgb(75, 167, 241);
+  color: #fff;
+  font-size: inherit;
+  cursor: pointer;
+  transition: background-color ease-in-out 100ms;
+
+  &:disabled {
+    background: rgb(137, 158, 175);
+    cursor: not-allowed;
+  }
+
+  &:enabled:hover {
+    background: rgb(102, 186, 255);
+  }
+
+  &:enabled:active {
+    background: rgb(131, 192, 243);
+  }
+}
