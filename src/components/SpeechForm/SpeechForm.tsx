@@ -1,5 +1,6 @@
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { browser } from 'webextension-polyfill-ts';
+import cn from 'classnames';
 
 import { BrowserStorageKey } from '../../models';
 import { speak } from '../../util';
@@ -48,7 +49,7 @@ export const SpeechForm = (): JSX.Element => {
     [speech, text],
   );
 
-  const onKeyUp = useCallback(
+  const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (text && (event.ctrlKey || event.metaKey) && event.key === 'Enter') {
         speak(text, speech);
@@ -59,19 +60,17 @@ export const SpeechForm = (): JSX.Element => {
 
   return (
     <form onSubmit={onSubmit} className={styles.speechForm}>
-      <label className={styles.label} htmlFor="phrase">
-        Enter something to say
-      </label>
       <textarea
-        id="phrase"
         value={text}
+        placeholder="Type something to say"
         ref={textareaRef}
         onChange={onChange}
-        onKeyUp={onKeyUp}
-        className={styles.textInput}
+        onKeyDown={onKeyDown}
+        className={cn('browser-style', styles.textInput)}
       ></textarea>
-      <button type="submit" className={styles.button} disabled={!text}>
-        Say It <small>(Ctrl+Enter or Cmd+Enter)</small>
+      <button type="submit" className={cn('browser-style', styles.button)} disabled={!text}>
+        <span className={styles.buttonText}>Say It</span>
+        <small className={styles.buttonText}>(Ctrl+Enter or Cmd+Enter)</small>
       </button>
     </form>
   );

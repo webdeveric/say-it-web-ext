@@ -1,41 +1,42 @@
-.speechForm {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.25rem;
-}
+@import url('../../styles/vars.css');
 
-.label {
-  font: caption;
-  margin: 0 0 0.5rem 0;
-  font-size: 1em;
+.speechForm {
+  display: grid;
+  grid-template-columns: auto;
+  gap: var(--half-gutter);
+
+  button {
+    margin: 0;
+  }
 }
 
 .textInput {
+  width: 100%;
   resize: vertical;
-  min-height: 6rem;
-  font-size: 1em;
+  min-height: 8rem;
+  max-height: 400px;
+  margin: 0;
+  padding: var(--half-gutter);
 }
 
 .button {
-  margin-top: 0.25rem;
-  border: 0;
-  padding: 0.333em 0.666em;
-  background: rgb(75, 167, 241);
-  color: #fff;
-  font-size: inherit;
   cursor: pointer;
-  transition: background-color ease-in-out 100ms;
+  font-size: 1.25em;
+  padding: var(--half-gutter);
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: space-between;
+  align-items: center;
+  text-align: center;
 
-  &:disabled {
-    background: rgb(137, 158, 175);
-    cursor: not-allowed;
+  & > .buttonText {
+    flex: 0 0 auto;
   }
 
-  &:enabled:hover {
-    background: rgb(102, 186, 255);
-  }
-
-  &:enabled:active {
-    background: rgb(131, 192, 243);
+  small {
+    font-size: 0.75em;
   }
 }
