@@ -21,6 +21,7 @@
     "persistent": false
   },
   "browser_action": {
+    "browser_style": true,
     "default_title": "Say It",
     "default_popup": "browserAction.html",
     "default_icon": {
@@ -37,18 +38,21 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Alt+Ctrl+A"
+        "default": "Alt+Ctrl+A",
+        "mac": "Ctrl+MacCtrl+A"
       }
     },
     "stop-speaking": {
       "suggested_key": {
-        "default": "Alt+Ctrl+W"
+        "default": "Alt+Ctrl+W",
+        "mac": "Ctrl+MacCtrl+W"
       },
       "description": "Stop speaking"
     },
     "repeat-last-phrase": {
       "suggested_key": {
-        "default": "Alt+Ctrl+S"
+        "default": "Alt+Ctrl+S",
+        "mac": "Ctrl+MacCtrl+S"
       },
       "description": "Say it again"
     }

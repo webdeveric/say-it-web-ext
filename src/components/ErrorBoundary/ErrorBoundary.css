@@ -1,10 +1,10 @@
 @import url('../../styles/vars.css');
 
 .errorBoundary {
-  --gap: 1rem;
+  word-break: break-word;
 
   h1 {
-    padding-bottom: var(--gap);
+    padding-bottom: var(--gutter);
     border-bottom: 1px solid var(--dark-grey);
   }
 }
@@ -12,8 +12,8 @@
 .errorDetails {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: var(--gap);
-  margin: var(--gap) auto;
+  gap: var(--gutter);
+  margin: var(--gutter) auto;
 
   dt {
     white-space: nowrap;
@@ -34,7 +34,7 @@
   .line {
     display: block;
     background: var(--white);
-    padding: calc(var(--gap) / 2);
+    padding: var(--half-gutter);
     margin: 0;
     border-bottom: 1px solid var(--dark-grey);
 
