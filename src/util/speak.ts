@@ -6,6 +6,18 @@ export type SpeakOptions = {
   voice?: SpeechSynthesisVoice | null;
 };
 
+export type EventHandler<E extends Event> = (event: E) => void | Record<'handleEvent', (event: E) => void>;
+
+export const utteranceEvents: (keyof SpeechSynthesisUtteranceEventMap)[] = [
+  'boundary',
+  'end',
+  'error',
+  'mark',
+  'pause',
+  'resume',
+  'start',
+];
+
 export async function speak(
   text: string,
   options: SpeakOptions = {
@@ -15,6 +27,7 @@ export async function speak(
     lang: navigator.language,
     voice: null,
   },
+  eventHandler?: EventHandler<SpeechSynthesisEvent | SpeechSynthesisErrorEvent>,
 ): Promise<SpeechSynthesisEvent> {
   return new Promise((resolve, reject) => {
     if ('speechSynthesis' in window) {
@@ -22,6 +35,12 @@ export async function speak(
 
       phrase.addEventListener('end', event => resolve(event));
       phrase.addEventListener('error', event => reject(event));
+
+      if (eventHandler) {
+        utteranceEvents.forEach(eventName => {
+          phrase.addEventListener(eventName, eventHandler, false);
+        });
+      }
 
       window.speechSynthesis.speak(phrase);
 

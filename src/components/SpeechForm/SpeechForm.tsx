@@ -1,42 +1,74 @@
-import { KeyboardEvent, useCallback, useEffect, useRef, useState, VoidFunctionComponent } from 'react';
-import { browser } from 'webextension-polyfill-ts';
+import { KeyboardEvent, useCallback, useEffect, useState, VoidFunctionComponent } from 'react';
 import cn from 'classnames';
 
-import { BrowserStorageKey } from '../../models';
 import { speak } from '../../util';
 import { useSpeech } from '../../contexts/SpeechContext';
 
 import * as styles from './SpeechForm.css';
+import { getLastPhrase, setLastPhrase } from '../../util/storage';
+
+const keyboardShortcutText = /Macintosh|Mac OS/i.test(navigator.userAgent) ? 'Cmd+Enter' : 'Ctrl+Enter';
+
+type ErrorCodeMessageProps = {
+  errorCode: SpeechSynthesisErrorCode;
+};
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const ErrorCodeMessage: VoidFunctionComponent<ErrorCodeMessageProps> = ({ errorCode }) => {
+  return (
+    <p>
+      An error has occurred: <q>{errorCode}</q>
+    </p>
+  );
+};
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpeechForm: VoidFunctionComponent = () => {
   const speech = useSpeech();
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
   const [text, setText] = useState('');
 
+  const [pending, setPending] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  const [errorCode, setErrorCode] = useState<SpeechSynthesisErrorCode>();
+
   useEffect(() => {
-    browser.storage.local.get(BrowserStorageKey.LastPhrase).then(({ [BrowserStorageKey.LastPhrase]: value }) => {
-      setText(value);
-    });
+    getLastPhrase()
+      .then(setText)
+      .catch(error => console.error(error));
   }, []);
 
-  useEffect(() => {
-    const { current } = textareaRef;
+  const handleSpeechEvents = useCallback((event: SpeechSynthesisEvent | SpeechSynthesisErrorEvent) => {
+    switch (event.type) {
+      case 'start':
+        setPlaying(true);
+        setPending(false);
 
-    if (current) {
-      current.focus();
+        break;
+      case 'end':
+        setPlaying(false);
+        setPending(false);
+
+        break;
+      case 'error':
+        if (event instanceof SpeechSynthesisErrorEvent) {
+          setPlaying(false);
+          setPending(false);
+          setErrorCode(event.error);
+        }
+
+        break;
+      default:
+        console.log(event);
     }
-  }, [textareaRef]);
+  }, []);
 
   const onChange = useCallback(
     event => {
       setText(event.target.value);
 
-      browser.storage.local.set({
-        [BrowserStorageKey.LastPhrase]: event.target.value,
-      });
+      setLastPhrase(event.target.value);
     },
     [setText],
   );
@@ -45,33 +77,51 @@ export const SpeechForm: VoidFunctionComponent = () => {
     event => {
       event.preventDefault();
 
-      text && speak(text, speech);
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+      }
+
+      text && speak(text, speech, handleSpeechEvents);
     },
-    [speech, text],
+    [speech, text, handleSpeechEvents],
   );
 
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (text && (event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-        speak(text, speech);
+        setPending(true);
+
+        if (window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+        }
+
+        speak(text, speech, handleSpeechEvents);
       }
     },
-    [speech, text],
+    [speech, text, handleSpeechEvents],
   );
+
+  const icon = errorCode ? '😡' : playing ? '🔇' : pending ? '⏳' : '🔊';
 
   return (
     <form onSubmit={onSubmit} className={styles.speechForm}>
       <textarea
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus
+        spellCheck="true"
         value={text}
         placeholder="Type something to say"
-        ref={textareaRef}
         onChange={onChange}
         onKeyDown={onKeyDown}
         className={cn('browser-style', styles.textInput)}
       ></textarea>
-      <button type="submit" className={cn('browser-style', styles.button)} disabled={!text}>
+
+      {errorCode && <ErrorCodeMessage errorCode={errorCode} />}
+
+      <button type="submit" className={cn('browser-style', styles.button)} disabled={!text || pending || playing}>
+        <span className={styles.buttonText}>{icon}</span>
         <span className={styles.buttonText}>Say It</span>
-        <small className={styles.buttonText}>(Ctrl+Enter or Cmd+Enter)</small>
+        <small className={styles.buttonText}>{keyboardShortcutText}</small>
       </button>
     </form>
   );
