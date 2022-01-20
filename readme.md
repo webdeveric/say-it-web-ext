@@ -16,10 +16,10 @@ You can get this addon at https://addons.mozilla.org/en-US/firefox/addon/say-it/
 ### Building the web extension
 
 ```shell
-npm run web-ext
+npm run build
 ```
 
-The `zip` output will be in the `./build` folder.
+The `zip` output will be in the `./build` folder and the webpack output will be in the `./dist` folder.
 
 ## Extension signing for Firefox
 
