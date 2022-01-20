@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const path = require('path');
+const { BannerPlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const WebExtPlugin = require('web-ext-plugin');
 const git = require('git-rev-sync');
+/* eslint-enable @typescript-eslint/naming-convention */
 
 const webExtConfig = require('./web-ext-config.js');
 
-const { name: extensionName } = require('./src/manifest.json');
+const { name: extensionName, version: extensionVersion, homepage_url } = require('./src/manifest.json');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -29,8 +31,7 @@ const config = {
     assetModuleFilename: 'assets/[hash][ext][query]',
   },
   optimization: {
-    minimize: isProd,
-    minimizer: ['...', new CssMinimizerPlugin()],
+    minimize: false,
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
@@ -99,6 +100,11 @@ const config = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
   },
   plugins: [
+    new BannerPlugin({
+      banner() {
+        return `${extensionName} (${extensionVersion})\nSource code and build instructions: ${homepage_url}`;
+      },
+    }),
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
     }),
@@ -167,7 +173,7 @@ const config = {
             sha: git.short(),
           };
           // eslint-disable-next-line no-empty
-        } catch (_err) {}
+        } catch {}
 
         return {
           metadata: {
