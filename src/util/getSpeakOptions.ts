@@ -13,7 +13,7 @@ export async function getSpeakOptions(): Promise<SpeakOptions> {
 
   const voices = await getVoices();
 
-  const voice = voices.find(v => v.name === options[BrowserStorageKey.VoiceName]);
+  const voice = voices.find(voice => voice.name === options[BrowserStorageKey.VoiceName]);
 
   if (voice) {
     options.voice = voice;

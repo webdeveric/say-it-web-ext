@@ -14,6 +14,7 @@ type ErrorStackProps = {
   stack: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const ErrorStack: VoidFunctionComponent<ErrorStackProps> = ({ stack }): JSX.Element => {
   const lines = stack.trim().split(/\n+/);
 

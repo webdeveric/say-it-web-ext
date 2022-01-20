@@ -11,6 +11,7 @@ export type RangeSliderProps = Pick<TickMarksProps, 'min' | 'max' | 'step'> &
     maxTicks?: number;
   };
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const RangeSlider: VoidFunctionComponent<RangeSliderProps> = ({
   id,
   value,
@@ -23,7 +24,7 @@ export const RangeSlider: VoidFunctionComponent<RangeSliderProps> = ({
   className,
   ...rest
 }) => {
-  const v = parseFloat(String(value));
+  const floatValue = parseFloat(String(value));
 
   return (
     <Fragment>
@@ -33,7 +34,7 @@ export const RangeSlider: VoidFunctionComponent<RangeSliderProps> = ({
         id={id}
         className={cn(styles.rangeSlider, className)}
         onChange={onChange}
-        value={v}
+        value={floatValue}
         min={min}
         max={max}
         step={step}

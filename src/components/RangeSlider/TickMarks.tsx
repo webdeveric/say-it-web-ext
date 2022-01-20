@@ -1,4 +1,4 @@
-import { VoidFunctionComponent } from 'react';
+import type { VoidFunctionComponent } from 'react';
 
 export type TickMarksProps = {
   id: string;
@@ -8,6 +8,7 @@ export type TickMarksProps = {
   limit: number;
 };
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TickMarks: VoidFunctionComponent<TickMarksProps> = ({ id, min, max, step, limit = Infinity }) => {
   const numTicks = Math.min(limit, (max - min) / step);
 

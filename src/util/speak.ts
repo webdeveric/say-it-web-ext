@@ -20,8 +20,8 @@ export async function speak(
     if ('speechSynthesis' in window) {
       const phrase = Object.assign(new SpeechSynthesisUtterance(text), options);
 
-      phrase.addEventListener('end', e => resolve(e));
-      phrase.addEventListener('error', e => reject(e));
+      phrase.addEventListener('end', event => resolve(event));
+      phrase.addEventListener('error', event => reject(event));
 
       window.speechSynthesis.speak(phrase);
 

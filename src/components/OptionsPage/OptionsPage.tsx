@@ -10,6 +10,7 @@ import * as styles from './OptionsPage.css';
 
 const [languageCode] = navigator.language.split('-');
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const OptionsPage = (): JSX.Element => {
   const {
     value: pitch,
@@ -32,29 +33,29 @@ export const OptionsPage = (): JSX.Element => {
   const voicesNotInYourLang = voices.filter(voice => !voice.lang.startsWith(languageCode));
 
   const onVoiceNameChange = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      setVoiceName(e.target.value);
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      setVoiceName(event.target.value);
     },
     [setVoiceName],
   );
 
   const onPitchChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setPitch(parseFloat(e.target.value));
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setPitch(parseFloat(event.target.value));
     },
     [setPitch],
   );
 
   const onRateChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setRate(parseFloat(e.target.value));
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setRate(parseFloat(event.target.value));
     },
     [setRate],
   );
 
   const onVolumeChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setVolume(parseFloat(e.target.value));
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setVolume(parseFloat(event.target.value));
     },
     [setVolume],
   );

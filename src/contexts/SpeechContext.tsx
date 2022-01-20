@@ -20,12 +20,14 @@ const defaultSpeechDetails: SpeechDetails = {
   volume: 1,
 };
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpeechContext = createContext<SpeechDetails>(defaultSpeechDetails);
 
 SpeechContext.displayName = 'SpeechContext';
 
 export const useSpeech = (): SpeechDetails => useContext(SpeechContext);
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpeechDetailsProvider: FunctionComponent = ({ children }) => {
   const [value, setContextValue] = useState<SpeechDetails>(defaultSpeechDetails);
 
@@ -47,7 +49,7 @@ export const SpeechDetailsProvider: FunctionComponent = ({ children }) => {
       if (voiceName) {
         const voices = await getVoices();
 
-        const voice = voices.find(v => v.name === voiceName);
+        const voice = voices.find(voice => voice.name === voiceName);
 
         if (voice) {
           options.voice = voice;

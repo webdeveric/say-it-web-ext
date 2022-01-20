@@ -1,4 +1,4 @@
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useCallback, useEffect, useRef, useState, VoidFunctionComponent } from 'react';
 import { browser } from 'webextension-polyfill-ts';
 import cn from 'classnames';
 
@@ -8,7 +8,8 @@ import { useSpeech } from '../../contexts/SpeechContext';
 
 import * as styles from './SpeechForm.css';
 
-export const SpeechForm = (): JSX.Element => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const SpeechForm: VoidFunctionComponent = () => {
   const speech = useSpeech();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);

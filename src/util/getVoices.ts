@@ -20,7 +20,7 @@ export async function getVoices(): Promise<SpeechSynthesisVoice[]> {
       },
     );
 
-    data.sort((a, b) => a.name.localeCompare(b.name));
+    data.sort((left, right) => left.name.localeCompare(right.name));
   } catch (error) {
     console.info(error);
   }
