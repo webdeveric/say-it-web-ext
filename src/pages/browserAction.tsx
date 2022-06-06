@@ -1,5 +1,7 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { BrowserActionPage } from '../components/BrowserActionPage';
 
-ReactDOM.render(<BrowserActionPage />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(<BrowserActionPage />);
