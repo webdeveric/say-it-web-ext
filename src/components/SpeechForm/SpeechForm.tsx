@@ -1,4 +1,12 @@
-import { KeyboardEvent, useCallback, useEffect, useState, VoidFunctionComponent } from 'react';
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  FunctionComponent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import cn from 'classnames';
 
 import { speak } from '../../util';
@@ -14,7 +22,7 @@ type ErrorCodeMessageProps = {
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const ErrorCodeMessage: VoidFunctionComponent<ErrorCodeMessageProps> = ({ errorCode }) => {
+const ErrorCodeMessage: FunctionComponent<ErrorCodeMessageProps> = ({ errorCode }) => {
   return (
     <p>
       An error has occurred: <q>{errorCode}</q>
@@ -23,7 +31,7 @@ const ErrorCodeMessage: VoidFunctionComponent<ErrorCodeMessageProps> = ({ errorC
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const SpeechForm: VoidFunctionComponent = () => {
+export const SpeechForm: FunctionComponent = () => {
   const speech = useSpeech();
 
   const [text, setText] = useState('');
@@ -64,16 +72,16 @@ export const SpeechForm: VoidFunctionComponent = () => {
     }
   }, []);
 
-  const onChange = useCallback(
+  const onChange: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
     event => {
       setText(event.target.value);
 
-      setLastPhrase(event.target.value);
+      setLastPhrase(event.target.value).catch(error => console.error(error));
     },
     [setText],
   );
 
-  const onSubmit = useCallback(
+  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     event => {
       event.preventDefault();
 
@@ -81,7 +89,9 @@ export const SpeechForm: VoidFunctionComponent = () => {
         window.speechSynthesis.cancel();
       }
 
-      text && speak(text, speech, handleSpeechEvents);
+      if (text) {
+        speak(text, speech, handleSpeechEvents).catch(error => console.error(error));
+      }
     },
     [speech, text, handleSpeechEvents],
   );
@@ -95,7 +105,7 @@ export const SpeechForm: VoidFunctionComponent = () => {
           window.speechSynthesis.cancel();
         }
 
-        speak(text, speech, handleSpeechEvents);
+        speak(text, speech, handleSpeechEvents).catch(error => console.error(error));
       }
     },
     [speech, text, handleSpeechEvents],

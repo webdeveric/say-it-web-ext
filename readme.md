@@ -1,5 +1,7 @@
 # Say it
 
+[![NodeJS](https://github.com/webdeveric/say-it-web-ext/actions/workflows/node.js.yml/badge.svg)](https://github.com/webdeveric/say-it-web-ext/actions/workflows/node.js.yml)
+
 Say a word or phrase just by highlighting it and clicking the Say It context menu item.
 
 The voice, pitch, rate, and volume can be customized in the add-on preferences.

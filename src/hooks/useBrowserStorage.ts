@@ -20,9 +20,9 @@ export const useBrowserStorage = <T = unknown>(
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(true);
 
-  const set = (value: T) => browser.storage[storageArea].set({ [key]: value });
+  const set = (value: T): Promise<void> => browser.storage[storageArea].set({ [key]: value });
 
-  const remove = () => browser.storage[storageArea].remove(key);
+  const remove = (): Promise<void> => browser.storage[storageArea].remove(key);
 
   useEffect(() => {
     setLoading(true);
@@ -51,7 +51,7 @@ export const useBrowserStorage = <T = unknown>(
   }, [key, storageArea]);
 
   useEffect(() => {
-    const onChanged = (changes: Record<string, Storage.StorageChange>, areaName: string) => {
+    const onChanged = (changes: Record<string, Storage.StorageChange>, areaName: string): void => {
       if (areaName === storageArea && Object.prototype.hasOwnProperty.call(changes, key)) {
         console.info(`[useStorage hook] ${key} changed in browser.storage.${storageArea}`);
 

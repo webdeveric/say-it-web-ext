@@ -19,17 +19,22 @@
     }
   },
   "parserOptions": {
+    "project": ["./tsconfig.json"],
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "overrides": [
     {
-      "files": [
-        "**/*.tsx"
-      ],
+      "files": ["**/*.tsx"],
       "rules": {
         "react/prop-types": "off"
+      }
+    },
+    {
+      "files": ["./*.js"],
+      "parserOptions": {
+        "project": ["./tsconfig.project-files.json"]
       }
     }
   ],
