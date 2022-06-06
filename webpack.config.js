@@ -6,6 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const WebExtPlugin = require('web-ext-plugin');
 const git = require('git-rev-sync');
@@ -19,7 +20,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const config = {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd ? 'source-map' : 'inline-source-map',
+  devtool: isProd ? false : 'inline-source-map',
   entry: {
     background: './src/pages/background',
     browserAction: './src/pages/browserAction',
@@ -31,7 +32,8 @@ const config = {
     assetModuleFilename: 'assets/[hash][ext][query]',
   },
   optimization: {
-    minimize: false,
+    minimize: isProd,
+    minimizer: ['...', new CssMinimizerPlugin()],
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
@@ -114,7 +116,7 @@ const config = {
       extensions: ['ts', 'tsx', 'js', 'jsx'],
     }),
     new HtmlWebpackPlugin({
-      minify: false,
+      minify: isProd,
       showErrors: true,
       chunks: ['background'],
       filename: 'background.html',
@@ -125,7 +127,7 @@ const config = {
       title: `${extensionName} - Background`,
     }),
     new HtmlWebpackPlugin({
-      minify: false,
+      minify: isProd,
       showErrors: true,
       chunks: ['browserAction'],
       filename: 'browserAction.html',
@@ -137,7 +139,7 @@ const config = {
       template: path.join(__dirname, 'src', 'react-app-template.html'),
     }),
     new HtmlWebpackPlugin({
-      minify: false,
+      minify: isProd,
       showErrors: true,
       chunks: ['options'],
       filename: 'options.html',
