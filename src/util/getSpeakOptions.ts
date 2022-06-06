@@ -1,7 +1,7 @@
 import { browser } from 'webextension-polyfill-ts';
 import { BrowserStorageKey } from '../models';
 import { getVoices } from './getVoices';
-import { SpeakOptions } from './speak';
+import type { SpeakOptions } from './speak';
 
 export async function getSpeakOptions(): Promise<SpeakOptions> {
   const options = await browser.storage.local.get([

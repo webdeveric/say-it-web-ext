@@ -10,13 +10,13 @@ export const useVoices = (): {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const handler = async () => {
+    const handler = async (): Promise<void> => {
       setLoading(true);
       setVoices(await getVoices());
       setLoading(false);
     };
 
-    handler();
+    handler().catch(error => console.error(error));
 
     window.speechSynthesis.addEventListener('voiceschanged', handler, false);
 

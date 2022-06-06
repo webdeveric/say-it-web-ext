@@ -34,28 +34,28 @@ export const OptionsPage = (): JSX.Element => {
 
   const onVoiceNameChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
-      setVoiceName(event.target.value);
+      setVoiceName(event.target.value).catch(error => console.error(error));
     },
     [setVoiceName],
   );
 
   const onPitchChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setPitch(parseFloat(event.target.value));
+      setPitch(parseFloat(event.target.value)).catch(error => console.error(error));
     },
     [setPitch],
   );
 
   const onRateChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setRate(parseFloat(event.target.value));
+      setRate(parseFloat(event.target.value)).catch(error => console.error(error));
     },
     [setRate],
   );
 
   const onVolumeChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setVolume(parseFloat(event.target.value));
+      setVolume(parseFloat(event.target.value)).catch(error => console.error(error));
     },
     [setVolume],
   );
