@@ -60,7 +60,7 @@
     "@webdeveric/eslint-config-ts": "^0.5.2",
     "@webdeveric/prettier-config": "^0.2.0",
     "@webdeveric/sync-package-version": "^0.3.0",
-    "@webdeveric/utils": "^0.14.1",
+    "@webdeveric/utils": "^0.26.3",
     "autoprefixer": "^10.2.5",
     "classnames": "^2.3.1",
     "clean-webpack-plugin": "^4.0.0",
