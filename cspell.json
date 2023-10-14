@@ -18,6 +18,7 @@
     "typecheck",
     "Unmount",
     "unsanitized",
+    "vitest",
     "webdeveric",
     "webextension",
     "webextensions",
