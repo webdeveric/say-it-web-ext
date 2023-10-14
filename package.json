@@ -42,16 +42,6 @@
     "version": "sync-package-version ./src/manifest.json | xargs git add",
     "prepare": "husky install"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --cache --fix",
-      "jest --bail --findRelatedTests --passWithNoTests"
-    ],
-    "*.{js,jsx,ts,tsx,json,md,css}": [
-      "cspell lint --no-progress --no-summary --no-must-find-files",
-      "prettier --write"
-    ]
-  },
   "prettier": "@webdeveric/prettier-config",
   "browserslist": [
     "extends @webdeveric/browserslist-config/web-extensions"
@@ -88,7 +78,6 @@
     "happy-dom": "^12.9.1",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.3",
-    "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^14.0.1",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
