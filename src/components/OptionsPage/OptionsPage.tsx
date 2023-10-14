@@ -1,36 +1,29 @@
-import { ChangeEvent, useCallback } from 'react';
 import cn from 'classnames';
+import { type ChangeEvent, useCallback } from 'react';
 
-import { useBrowserStorage, useVoices } from '../../hooks';
-import { Bootstrap } from '../Bootstrap';
-import { BrowserStorageKey } from '../../models';
-import { RangeSlider } from '../RangeSlider';
+import { useBrowserStorage } from '@hooks/useBrowserStorage.js';
+import { useVoices } from '@hooks/useVoices.js';
+import { BrowserStorageKey } from '@models/storage.js';
+
+import { Bootstrap } from '../Bootstrap.js';
+import { RangeSlider } from '../RangeSlider/RangeSlider.js';
 
 import * as styles from './OptionsPage.css';
 
 const [languageCode] = navigator.language.split('-');
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const OptionsPage = (): JSX.Element => {
-  const {
-    value: pitch,
-    loading: pitchLoading,
-    set: setPitch,
-  } = useBrowserStorage<number>(BrowserStorageKey.Pitch, 1.0);
-  const { value: rate, loading: rateLoading, set: setRate } = useBrowserStorage<number>(BrowserStorageKey.Rate, 1.0);
-  const {
-    value: volume,
-    loading: volumeLoading,
-    set: setVolume,
-  } = useBrowserStorage<number>(BrowserStorageKey.Volume, 1.0);
+  const { value: pitch, loading: pitchLoading, set: setPitch } = useBrowserStorage(BrowserStorageKey.Pitch, 1.0);
+  const { value: rate, loading: rateLoading, set: setRate } = useBrowserStorage(BrowserStorageKey.Rate, 1.0);
+  const { value: volume, loading: volumeLoading, set: setVolume } = useBrowserStorage(BrowserStorageKey.Volume, 1.0);
   const {
     value: voiceName,
     loading: voiceNameLoading,
     set: setVoiceName,
   } = useBrowserStorage<string>(BrowserStorageKey.VoiceName);
   const { voices, loading: voicesLoading } = useVoices();
-  const voicesInYourLang = voices.filter(voice => voice.lang.startsWith(languageCode));
-  const voicesNotInYourLang = voices.filter(voice => !voice.lang.startsWith(languageCode));
+  const voicesInYourLang = voices.filter(voice => languageCode && voice.lang.startsWith(languageCode));
+  const voicesNotInYourLang = voices.filter(voice => languageCode && !voice.lang.startsWith(languageCode));
 
   const onVoiceNameChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {

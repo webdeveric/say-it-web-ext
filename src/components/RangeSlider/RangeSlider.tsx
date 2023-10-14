@@ -1,9 +1,8 @@
-import { Fragment, InputHTMLAttributes, VoidFunctionComponent } from 'react';
 import cn from 'classnames';
-
-import { TickMarks, TickMarksProps } from './TickMarks';
+import { Fragment, type FunctionComponent, type InputHTMLAttributes } from 'react';
 
 import * as styles from './RangeSlider.css';
+import { type TickMarksProps, TickMarks } from './TickMarks.js';
 
 export type RangeSliderProps = Pick<TickMarksProps, 'min' | 'max' | 'step'> &
   InputHTMLAttributes<HTMLInputElement> & {
@@ -11,8 +10,7 @@ export type RangeSliderProps = Pick<TickMarksProps, 'min' | 'max' | 'step'> &
     maxTicks?: number;
   };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export const RangeSlider: VoidFunctionComponent<RangeSliderProps> = ({
+export const RangeSlider: FunctionComponent<RangeSliderProps> = ({
   id,
   value,
   onChange,

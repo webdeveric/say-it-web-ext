@@ -1,8 +1,8 @@
-import { createContext, FunctionComponent, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { createContext, type FunctionComponent, type PropsWithChildren, useContext, useEffect, useState } from 'react';
 
-import { BrowserStorageKey } from '../models';
-import { getVoices } from '../util/getVoices';
-import { useBrowserStorage } from '../hooks';
+import { useBrowserStorage } from '../hooks/useBrowserStorage.js';
+import { BrowserStorageKey } from '../models/storage.js';
+import { getVoices } from '../utils/getVoices.js';
 
 export type SpeechDetails = {
   lang: string;
@@ -20,7 +20,6 @@ const defaultSpeechDetails: SpeechDetails = {
   volume: 1,
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpeechContext = createContext<SpeechDetails>(defaultSpeechDetails);
 
 SpeechContext.displayName = 'SpeechContext';
@@ -54,7 +53,6 @@ export const createSpeechDetails = async ({
   return options;
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpeechDetailsProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const [value, setContextValue] = useState<SpeechDetails>(defaultSpeechDetails);
 

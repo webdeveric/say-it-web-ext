@@ -1,35 +1,60 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-const path = require('path');
-const { BannerPlugin } = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const WebpackAssetsManifest = require('webpack-assets-manifest');
-const WebExtPlugin = require('web-ext-plugin');
-const git = require('git-rev-sync');
-/* eslint-enable @typescript-eslint/naming-convention */
+import { join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const webExtConfig = require('./web-ext-config.js');
+import { comment } from '@webdeveric/utils/comment';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import WebExtPlugin from 'web-ext-plugin';
+import webpack from 'webpack';
+import WebpackAssetsManifest from 'webpack-assets-manifest';
 
-const { name: extensionName, version: extensionVersion, homepage_url } = require('./src/manifest.json');
+import manifest from './src/manifest.json' assert { type: 'json' };
+import tsconfig from './tsconfig.json' assert { type: 'json' };
+import { artifactsDir, run, sourceDir } from './web-ext-config.js';
 
+const dirname = fileURLToPath(new URL('.', import.meta.url));
+const runnerDebug = process.env.RUNNER_DEBUG === '1';
+const buildTimestamp = new Date().toISOString();
 const isProd = process.env.NODE_ENV === 'production';
 
+const alias = Object.fromEntries(
+  Object.entries(tsconfig.compilerOptions.paths).reduce((entries, [key, value]) => {
+    entries.push([key.slice(0, -2), resolve(dirname, value.at(0).slice(0, -2))]);
+
+    return entries;
+  }, []),
+);
+
 const config = {
+  infrastructureLogging: {
+    level: runnerDebug ? 'verbose' : 'warn',
+    debug: runnerDebug,
+  },
   mode: isProd ? 'production' : 'development',
   devtool: isProd ? false : 'inline-source-map',
   entry: {
-    background: './src/pages/background',
-    browserAction: './src/pages/browserAction',
-    options: './src/pages/options',
+    background: './src/pages/background.ts',
+    browserAction: './src/pages/browserAction.tsx',
+    options: './src/pages/options.tsx',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: resolve(dirname, 'dist'),
     filename: '[name].js',
     assetModuleFilename: 'assets/[hash][ext][query]',
+  },
+  stats: {
+    errorDetails: runnerDebug,
+  },
+  resolve: {
+    alias,
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
+    extensionAlias: {
+      '.js': ['.ts', '.tsx', '.js'],
+      '.jsx': ['.ts', '.tsx', '.js'],
+    },
   },
   optimization: {
     minimize: isProd,
@@ -51,15 +76,17 @@ const config = {
     },
   },
   module: {
+    parser: {
+      javascript: {
+        importMeta: false,
+      },
+    },
     rules: [
       {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'ts-loader',
-            options: {
-              configFile: isProd ? 'tsconfig.json' : 'tsconfig-dev.json',
-            },
+            loader: 'swc-loader',
           },
         ],
         exclude: /node_modules/,
@@ -98,23 +125,35 @@ const config = {
       },
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
-  },
   plugins: [
-    new BannerPlugin({
-      banner() {
-        return `${extensionName} (${extensionVersion})\nSource code and build instructions: ${homepage_url}`;
-      },
+    new CleanWebpackPlugin(),
+    new webpack.BannerPlugin({
+      raw: true,
+      entryOnly: true,
+      banner: comment(
+        `
+          ${manifest.name} (${manifest.version})
+
+          Source code and build instructions are available at ${manifest.homepage_url}
+
+          Build timestamp: ${buildTimestamp}
+        `,
+        {
+          type: 'legal',
+        },
+      ),
     }),
-    new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
+    new webpack.EnvironmentPlugin({
+      GITHUB_SHA: '',
+      GITHUB_REF: '',
+      GITHUB_HEAD_REF: '',
+      GITHUB_BASE_REF: '',
+      BUILD_TIMESTAMP: buildTimestamp,
     }),
     new MiniCssExtractPlugin(),
-    new ESLintPlugin({
-      emitWarning: true,
-      extensions: ['ts', 'tsx', 'js', 'jsx'],
-    }),
     new HtmlWebpackPlugin({
       minify: isProd,
       showErrors: true,
@@ -124,7 +163,7 @@ const config = {
       meta: {
         viewport: false,
       },
-      title: `${extensionName} - Background`,
+      title: `${manifest.name} - Background`,
     }),
     new HtmlWebpackPlugin({
       minify: isProd,
@@ -135,8 +174,8 @@ const config = {
       meta: {
         viewport: false,
       },
-      title: `${extensionName} - Browser Action`,
-      template: path.join(__dirname, 'src', 'react-app-template.html'),
+      title: `${manifest.name} - Browser Action`,
+      template: join(dirname, 'src', 'react-app-template.html'),
     }),
     new HtmlWebpackPlugin({
       minify: isProd,
@@ -146,14 +185,14 @@ const config = {
       meta: {
         viewport: false,
       },
-      title: `${extensionName} - Options`,
-      template: path.join(__dirname, 'src', 'react-app-template.html'),
+      title: `${manifest.name} - Options`,
+      template: join(dirname, 'src', 'react-app-template.html'),
     }),
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src', 'manifest.json'),
-          to: path.join(__dirname, 'dist', 'manifest.json'),
+          from: resolve(dirname, 'src', 'manifest.json'),
+          to: join(dirname, 'dist', 'manifest.json'),
         },
       ],
     }),
@@ -166,21 +205,9 @@ const config = {
       transform(assets) {
         const { entrypoints, ...assetsOnly } = assets;
 
-        let gitDetails = {};
-
-        try {
-          gitDetails = {
-            branch: git.branch(),
-            timestamp: git.date(),
-            sha: git.short(),
-          };
-          // eslint-disable-next-line no-empty
-        } catch {}
-
         return {
           metadata: {
-            buildTimestamp: new Date().toISOString(),
-            git: gitDetails,
+            buildTimestamp,
           },
           assets: assetsOnly,
           entrypoints,
@@ -198,20 +225,21 @@ const config = {
     }),
     new WebExtPlugin({
       buildPackage: true,
-      artifactsDir: webExtConfig.artifactsDir,
-      sourceDir: webExtConfig.sourceDir,
-      startUrl: webExtConfig.run.startUrl,
+      artifactsDir: artifactsDir,
+      sourceDir: sourceDir,
+      startUrl: run.startUrl,
       target: [
         'firefox-desktop',
         // 'firefox-android',
         // 'chromium',
       ],
-      firefoxProfile: path.join(__dirname, '.firefox-profile'),
-      chromiumProfile: path.join(__dirname, '.chromium-profile'),
+      firefoxProfile: join(dirname, '.firefox-profile'),
+      chromiumProfile: join(dirname, '.chromium-profile'),
       profileCreateIfMissing: true,
       keepProfileChanges: true,
+      overwriteDest: true,
     }),
   ],
 };
 
-module.exports = config;
+export default config;

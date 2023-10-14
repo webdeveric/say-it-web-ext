@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getVoices } from '../util/getVoices';
+import { getVoices } from '@utils/getVoices.js';
 
 export const useVoices = (): {
   voices: SpeechSynthesisVoice[];
@@ -10,13 +10,20 @@ export const useVoices = (): {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const handler = async (): Promise<void> => {
+    const handler = (): void => {
       setLoading(true);
-      setVoices(await getVoices());
-      setLoading(false);
+      getVoices()
+        .then(setVoices)
+        .then(
+          () => setLoading(false),
+          error => {
+            setLoading(false);
+            console.error(error);
+          },
+        );
     };
 
-    handler().catch(error => console.error(error));
+    handler();
 
     window.speechSynthesis.addEventListener('voiceschanged', handler, false);
 

@@ -1,7 +1,8 @@
-import { browser, Storage } from 'webextension-polyfill-ts';
+/* eslint-disable import/no-named-as-default-member */
 import { useEffect, useState } from 'react';
+import browser, { type Storage } from 'webextension-polyfill';
 
-import { BrowserStorageKey, StorageArea } from '../models';
+import { BrowserStorageKey, StorageArea } from '@models/storage.js';
 
 export type StorageHook<T> = {
   error?: Error;
@@ -11,11 +12,15 @@ export type StorageHook<T> = {
   remove: () => Promise<void>;
 };
 
-export const useBrowserStorage = <T = unknown>(
+export function useBrowserStorage<T = unknown>(key: BrowserStorageKey): StorageHook<T | undefined>;
+
+export function useBrowserStorage<T = unknown>(key: BrowserStorageKey, initialValue: T): StorageHook<T>;
+
+export function useBrowserStorage<T = unknown>(
   key: BrowserStorageKey,
   initialValue?: T,
   storageArea: StorageArea = StorageArea.Local,
-): StorageHook<T> => {
+): StorageHook<T> {
   const [value, setValue] = useState<T | undefined>(initialValue);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(true);
@@ -55,7 +60,7 @@ export const useBrowserStorage = <T = unknown>(
       if (areaName === storageArea && Object.prototype.hasOwnProperty.call(changes, key)) {
         console.info(`[useStorage hook] ${key} changed in browser.storage.${storageArea}`);
 
-        setValue(changes[key].newValue);
+        setValue(changes[key]?.newValue);
       }
     };
 
@@ -67,4 +72,4 @@ export const useBrowserStorage = <T = unknown>(
   }, [key, storageArea]);
 
   return { error, value, loading, set, remove };
-};
+}

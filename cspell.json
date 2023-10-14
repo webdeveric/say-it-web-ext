@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "language": "en",
   "words": [
     "browserslist",
@@ -7,20 +7,30 @@
     "entrypoint",
     "entrypoints",
     "jsxdev",
+    "nvmrc",
     "orangered",
     "pathinfo",
     "postbuild",
+    "postcss",
     "postweb",
     "prebuild",
     "presign",
     "preweb",
+    "swcrc",
     "typecheck",
     "Unmount",
     "unsanitized",
+    "vitest",
     "webdeveric",
     "webextension",
     "webextensions",
     "xargs"
   ],
-  "ignorePaths": ["package-lock.json", "node_modules", "coverage", "dist", "build", "private"]
+  "ignorePaths": ["pnpm-lock.yaml", "package-lock.json", "node_modules", "coverage", "dist", "build", "private"],
+  "languageSettings": [
+    {
+      "languageId": "commit-msg",
+      "ignoreRegExpList": ["/^#.*/gm"]
+    }
+  ]
 }

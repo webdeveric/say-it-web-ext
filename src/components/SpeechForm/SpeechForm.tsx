@@ -1,19 +1,19 @@
+import cn from 'classnames';
 import {
-  ChangeEventHandler,
-  FormEventHandler,
-  FunctionComponent,
-  KeyboardEvent,
+  type ChangeEventHandler,
+  type FormEventHandler,
+  type FunctionComponent,
+  type KeyboardEvent,
   useCallback,
   useEffect,
   useState,
 } from 'react';
-import cn from 'classnames';
 
-import { speak } from '../../util';
-import { useSpeech } from '../../contexts/SpeechContext';
+import { useSpeech } from '../../contexts/SpeechContext.js';
+import { speak } from '../../utils/speak.js';
+import { getLastPhrase, setLastPhrase } from '../../utils/storage.js';
 
 import * as styles from './SpeechForm.css';
-import { getLastPhrase, setLastPhrase } from '../../util/storage';
 
 const keyboardShortcutText = /Macintosh|Mac OS/i.test(navigator.userAgent) ? 'Cmd+Enter' : 'Ctrl+Enter';
 
@@ -21,7 +21,6 @@ type ErrorCodeMessageProps = {
   errorCode: SpeechSynthesisErrorCode;
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const ErrorCodeMessage: FunctionComponent<ErrorCodeMessageProps> = ({ errorCode }) => {
   return (
     <p>
@@ -30,7 +29,6 @@ const ErrorCodeMessage: FunctionComponent<ErrorCodeMessageProps> = ({ errorCode 
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SpeechForm: FunctionComponent = () => {
   const speech = useSpeech();
 

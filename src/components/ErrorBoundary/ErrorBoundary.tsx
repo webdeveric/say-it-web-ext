@@ -1,4 +1,4 @@
-import { Component, Fragment, ReactNode, VoidFunctionComponent } from 'react';
+import { Component, Fragment, type FunctionComponent, type ReactNode } from 'react';
 
 import * as styles from './ErrorBoundary.css';
 
@@ -14,8 +14,7 @@ type ErrorStackProps = {
   stack: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const ErrorStack: VoidFunctionComponent<ErrorStackProps> = ({ stack }): JSX.Element => {
+const ErrorStack: FunctionComponent<ErrorStackProps> = ({ stack }): JSX.Element => {
   const lines = stack.trim().split(/\n+/);
 
   return (
@@ -54,23 +53,23 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     });
   };
 
-  componentDidMount(): void {
+  override componentDidMount(): void {
     window.addEventListener('error', this.handleOnError);
     window.addEventListener('unhandledrejection', this.handleUnhandledRejection);
   }
 
-  componentWillUnmount(): void {
+  override componentWillUnmount(): void {
     window.removeEventListener('error', this.handleOnError);
     window.removeEventListener('unhandledrejection', this.handleUnhandledRejection);
   }
 
-  componentDidCatch(error: Error, errorInfo: unknown): void {
+  override componentDidCatch(error: Error, errorInfo: unknown): void {
     console.groupCollapsed('ErrorBoundary');
     console.log(error, errorInfo);
     console.groupEnd();
   }
 
-  render(): ReactNode {
+  override render(): ReactNode {
     if (this.state.error) {
       return (
         <div className={styles.errorBoundary}>
