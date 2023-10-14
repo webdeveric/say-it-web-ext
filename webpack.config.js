@@ -13,7 +13,7 @@ import WebpackAssetsManifest from 'webpack-assets-manifest';
 
 import manifest from './src/manifest.json' assert { type: 'json' };
 import tsconfig from './tsconfig.json' assert { type: 'json' };
-import { artifactsDir, run, sourceDir } from './web-ext-config.js';
+import webExtConfig from './web-ext-config.cjs';
 
 const dirname = fileURLToPath(new URL('.', import.meta.url));
 const runnerDebug = process.env.RUNNER_DEBUG === '1';
@@ -225,9 +225,9 @@ const config = {
     }),
     new WebExtPlugin({
       buildPackage: true,
-      artifactsDir: artifactsDir,
-      sourceDir: sourceDir,
-      startUrl: run.startUrl,
+      artifactsDir: webExtConfig.artifactsDir,
+      sourceDir: webExtConfig.sourceDir,
+      startUrl: webExtConfig.run.startUrl,
       target: [
         'firefox-desktop',
         // 'firefox-android',

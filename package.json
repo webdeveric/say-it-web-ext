@@ -35,7 +35,7 @@
     "build": "NODE_ENV=production webpack",
     "start": "NODE_ENV=development webpack --watch",
     "presign": "npm run build",
-    "sign": "web-ext sign",
+    "sign": "web-ext sign --config web-ext-config.cjs",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
