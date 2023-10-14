@@ -1,26 +1,30 @@
 name: Node.js CI
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: [push]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
+  ci:
+    name: Continuous Integration
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run lint --if-present
-      - run: npm test
-      - run: npm run build --if-present
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Installing dependencies
+        run: pnpm install
+      - name: Linting
+        run: pnpm lint
+      - name: Type checking
+        run: pnpm typecheck
+      - name: Testing
+        run: pnpm coverage
+      - name: Building
+        run: pnpm build
