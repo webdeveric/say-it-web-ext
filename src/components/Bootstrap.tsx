@@ -1,8 +1,7 @@
-import { type FunctionComponent, PropsWithChildren, StrictMode } from 'react';
+import { type FunctionComponent, type PropsWithChildren, StrictMode } from 'react';
 
-import { ErrorBoundary } from './ErrorBoundary';
+import { ErrorBoundary } from './ErrorBoundary/ErrorBoundary.js';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const Bootstrap: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <StrictMode>

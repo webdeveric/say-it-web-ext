@@ -1,13 +1,11 @@
-import type { VoidFunctionComponent } from 'react';
+import { SpeechDetailsProvider } from '@contexts/SpeechContext.jsx';
 
-import { Bootstrap } from '../Bootstrap';
-import { SpeechDetailsProvider } from '../../contexts/SpeechContext';
-import { SpeechForm } from '../SpeechForm/SpeechForm';
+import { Bootstrap } from '../Bootstrap.js';
+import { SpeechForm } from '../SpeechForm/SpeechForm.js';
 
-import './BrowserActionPage.css';
+import type { FunctionComponent } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export const BrowserActionPage: VoidFunctionComponent = () => {
+export const BrowserActionPage: FunctionComponent = () => {
   return (
     <Bootstrap>
       <SpeechDetailsProvider>

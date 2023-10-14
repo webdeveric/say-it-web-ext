@@ -1,12 +1,14 @@
-import { getVoices } from './getVoices';
+import { afterAll, it, beforeAll, describe, expect, vi } from 'vitest';
+
+import { getVoices } from './getVoices.js';
 
 describe('getVoices()', () => {
   beforeAll(() => {
-    jest.spyOn(global.console, 'info').mockImplementation();
+    vi.spyOn(globalThis.console, 'info').mockImplementation(() => {});
   });
 
   afterAll(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Can return empty array', async () => {
@@ -14,11 +16,12 @@ describe('getVoices()', () => {
       configurable: true,
       writable: true,
       value: {
-        getVoices: jest.fn(() => []),
+        getVoices: vi.fn(() => []),
       },
     });
 
     await expect(getVoices()).resolves.toHaveLength(0);
+
     expect(console.info).toHaveBeenCalled();
   });
 
@@ -27,8 +30,8 @@ describe('getVoices()', () => {
       configurable: true,
       writable: true,
       value: {
-        getVoices: jest
-          .fn<SpeechSynthesisVoice[], never>(() => [])
+        getVoices: vi
+          .fn<SpeechSynthesisVoice[]>(() => [])
           .mockImplementationOnce(() => [])
           .mockImplementationOnce(() => [
             {

@@ -1,5 +1,7 @@
-import { browser } from 'webextension-polyfill-ts';
-import { BrowserStorageKey } from '../models/storage';
+/* eslint-disable import/no-named-as-default-member */
+import browser from 'webextension-polyfill';
+
+import { BrowserStorageKey } from '@models/storage.js';
 
 export async function getLastPhrase(defaultValue = ''): Promise<string> {
   const { [BrowserStorageKey.LastPhrase]: value = defaultValue } =

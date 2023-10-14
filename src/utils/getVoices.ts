@@ -1,12 +1,12 @@
-import { until } from '@webdeveric/utils';
+import { byLocaleCompare } from '@webdeveric/utils/sort';
+import { byProperty } from '@webdeveric/utils/sort-factory';
+import { until } from '@webdeveric/utils/until';
 
 export async function getVoices(): Promise<SpeechSynthesisVoice[]> {
-  let data: SpeechSynthesisVoice[] = [];
-
   try {
     // Sometimes speechSynthesis.getVoices() will return an empty array.
     // Lets try to getVoices() a few times before giving up.
-    data = await until<SpeechSynthesisVoice[]>(
+    const data = await until<SpeechSynthesisVoice[]>(
       resolve => {
         const voices = window.speechSynthesis.getVoices();
 
@@ -20,10 +20,12 @@ export async function getVoices(): Promise<SpeechSynthesisVoice[]> {
       },
     );
 
-    data.sort((left, right) => left.name.localeCompare(right.name));
+    data.sort(byProperty(byLocaleCompare, 'name'));
+
+    return data;
   } catch (error) {
     console.info(error);
   }
 
-  return data;
+  return [];
 }

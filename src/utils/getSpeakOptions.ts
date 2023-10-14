@@ -1,9 +1,13 @@
-import { browser } from 'webextension-polyfill-ts';
-import { BrowserStorageKey } from '../models';
-import { getVoices } from './getVoices';
-import type { SpeakOptions } from './speak';
+import browser from 'webextension-polyfill';
+
+import { BrowserStorageKey } from '../models/storage.js';
+
+import { getVoices } from './getVoices.js';
+
+import type { SpeakOptions } from './speak.js';
 
 export async function getSpeakOptions(): Promise<SpeakOptions> {
+  // eslint-disable-next-line import/no-named-as-default-member
   const options = await browser.storage.local.get([
     BrowserStorageKey.Pitch,
     BrowserStorageKey.Rate,
