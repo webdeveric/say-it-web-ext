@@ -11,11 +11,9 @@
 }
 
 .textInput {
-  width: 100%;
   resize: vertical;
   min-height: 8rem;
   max-height: 400px;
-  margin: 0;
   padding: var(--half-gutter);
 }
 
