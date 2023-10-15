@@ -33,6 +33,7 @@
     "spellcheck": "cspell --no-progress './**/*'",
     "format": "prettier --write .",
     "build": "NODE_ENV=production webpack",
+    "build:dev": "NODE_ENV=development webpack",
     "start": "NODE_ENV=development webpack --watch",
     "presign": "npm run build",
     "sign": "web-ext sign --config web-ext-config.cjs",
