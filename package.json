@@ -1,7 +1,7 @@
 {
   "name": "@webdeveric/say-it-web-ext",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "MIT",
   "description": "Say it",
   "type": "module",

@@ -3,7 +3,7 @@
   "name": "Say It",
   "short_name": "Say It",
   "description": "Highlight a word then say it",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Eric King",
   "homepage_url": "https://github.com/webdeveric/say-it-web-ext",
   "browser_specific_settings": {
