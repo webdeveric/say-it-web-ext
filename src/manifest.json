@@ -8,7 +8,8 @@
   "homepage_url": "https://github.com/webdeveric/say-it-web-ext",
   "browser_specific_settings": {
     "gecko": {
-      "id": "@say-it"
+      "id": "@say-it",
+      "strict_min_version": "106.0"
     }
   },
   "icons": {
@@ -21,7 +22,6 @@
     "persistent": false
   },
   "browser_action": {
-    "browser_style": true,
     "default_title": "Say It",
     "default_popup": "browserAction.html",
     "default_icon": {
@@ -30,29 +30,27 @@
     }
   },
   "options_ui": {
-    "browser_style": true,
-    "chrome_style": true,
     "open_in_tab": false,
     "page": "options.html"
   },
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Alt+Ctrl+A",
-        "mac": "Ctrl+MacCtrl+A"
+        "default": "Shift+Alt+A",
+        "mac": "Shift+MacCtrl+A"
       }
     },
     "stop-speaking": {
       "suggested_key": {
-        "default": "Alt+Ctrl+W",
-        "mac": "Ctrl+MacCtrl+W"
+        "default": "Shift+Alt+W",
+        "mac": "Shift+MacCtrl+W"
       },
       "description": "Stop speaking"
     },
     "repeat-last-phrase": {
       "suggested_key": {
-        "default": "Alt+Ctrl+S",
-        "mac": "Ctrl+MacCtrl+S"
+        "default": "Shift+Alt+D",
+        "mac": "Shift+MacCtrl+D"
       },
       "description": "Say it again"
     }

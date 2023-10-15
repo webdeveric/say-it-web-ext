@@ -12,7 +12,7 @@ module.exports = {
     overwriteDest: true,
   },
   run: {
-    startUrl: [`about:devtools-toolbox?id=${encodeURIComponent(webExtId)}&type=extension`, 'https://webdeveric.com/'],
+    startUrl: [`about:devtools-toolbox?id=${encodeURIComponent(webExtId)}&type=extension`],
   },
   ignoreFiles: ['package-lock.json', 'pnpm-lock.yaml'],
 };
