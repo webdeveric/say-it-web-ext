@@ -19,7 +19,6 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true,
     node: true,
     webextensions: true,
   },
@@ -119,6 +118,7 @@ module.exports = {
       rules: {
         'import/no-default-export': 'off',
         'import/no-named-as-default': 'off',
+        '@typescript-eslint/naming-convention': 'off',
       },
     },
     {

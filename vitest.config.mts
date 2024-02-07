@@ -34,6 +34,7 @@ const config = defineConfig({
     alias,
     environment: 'happy-dom',
     coverage: {
+      all: false,
       provider: 'v8',
     },
   },
