@@ -1,4 +1,4 @@
-import { afterAll, it, beforeAll, describe, expect, vi } from 'vitest';
+import { afterAll, it, beforeAll, describe, expect, vi, afterEach } from 'vitest';
 
 import { getVoices } from './getVoices.js';
 
@@ -9,6 +9,12 @@ describe('getVoices()', () => {
 
   afterAll(() => {
     vi.resetAllMocks();
+  });
+
+  const defaultSpeechSynthesis = window.speechSynthesis;
+
+  afterEach(() => {
+    window.speechSynthesis = defaultSpeechSynthesis;
   });
 
   it('Can return empty array', async () => {
